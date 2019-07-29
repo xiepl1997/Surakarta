@@ -5,37 +5,40 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+//æ£‹ç›˜
 public class MyPanel extends JPanel{
 
-	//36¸öµã
-	private Point[][] points= {
-			{new Point(140, 140),new Point(210,140),new Point(280,140),new Point(350,140),new Point(420, 140),new Point(490,140)},
-			{new Point(140, 210),new Point(210,210),new Point(280,210),new Point(350,210),new Point(420, 210),new Point(490,210)},
-			{new Point(140, 280),new Point(210,280),new Point(280,280),new Point(350,280),new Point(420, 280),new Point(490,280)},
-			{new Point(140, 350),new Point(210,350),new Point(280,350),new Point(350,350),new Point(420, 350),new Point(490,350)},
-			{new Point(140, 420),new Point(210,420),new Point(280,420),new Point(350,420),new Point(420, 420),new Point(490,420)},
-			{new Point(140, 490),new Point(210,490),new Point(280,490),new Point(350,490),new Point(420, 490),new Point(490,490)},
-	};
-	
-	//12¸öºÚ×ÓÎ»ÖÃ
-	public static Point[][] blackChess = {
+	//36ä¸ªç‚¹
+	public Point[][] points= {
 		{new Point(140, 140),new Point(210,140),new Point(280,140),new Point(350,140),new Point(420, 140),new Point(490,140)},
-		{new Point(140, 210),new Point(210,210),new Point(280,210),new Point(350,210),new Point(420, 210),new Point(490,210)}
-	};
-	//12¸ö°××ÖÎ»ÖÃ
-	public static Point[][] whiteChess = {
+		{new Point(140, 210),new Point(210,210),new Point(280,210),new Point(350,210),new Point(420, 210),new Point(490,210)},
+		{new Point(140, 280),new Point(210,280),new Point(280,280),new Point(350,280),new Point(420, 280),new Point(490,280)},
+		{new Point(140, 350),new Point(210,350),new Point(280,350),new Point(350,350),new Point(420, 350),new Point(490,350)},
 		{new Point(140, 420),new Point(210,420),new Point(280,420),new Point(350,420),new Point(420, 420),new Point(490,420)},
 		{new Point(140, 490),new Point(210,490),new Point(280,490),new Point(350,490),new Point(420, 490),new Point(490,490)},
 	};
+	
+	public int state[][] = {
+		{-1,-1,-1,-1,-1,-1},
+		{-1,-1,-1,-1,-1,-1},
+		{0,0,0,0,0,0},
+		{0,0,0,0,0,0},
+		{1,1,1,1,1,1},
+		{1,1,1,1,1,1}
+	};
+	
+	public ArrayList<Chess> chessList = new ArrayList<Chess>();
 	
 	public MyPanel() {
 		super();
 	}
 
-	//½çÃæ»æÖÆ
+	//æ£‹ç›˜é‡ç»˜
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
@@ -44,9 +47,9 @@ public class MyPanel extends JPanel{
 		setBackground(Color.LIGHT_GRAY);
 		
 		Graphics2D g2 = (Graphics2D)g;
-		g2.setStroke(new BasicStroke(5.0f));
+		g2.setStroke(new BasicStroke(6.0f));
 		
-		//»­ÁùÌõºáÏß
+		//ç»˜åˆ¶6æ¡æ¨ªçº¿
 		for(int i = 0; i < 6; i++) {
 			if(i == 0 || i == 5)
 				g2.setColor(Color.yellow);
@@ -56,7 +59,7 @@ public class MyPanel extends JPanel{
 				g2.setColor(Color.green);
 			g2.drawLine(points[i][0].x, points[i][0].y, points[i][5].x, points[i][5].y);
 		}
-		//»­ÁùÌõÊúÏß
+		//ç»˜åˆ¶6æ¡ç«–çº¿
 		for(int i = 0; i < 6; i ++) {
 			if(i == 0 || i == 5)
 				g2.setColor(Color.yellow);
@@ -67,21 +70,32 @@ public class MyPanel extends JPanel{
 			g2.drawLine(points[0][i].x, points[0][i].y, points[5][i].x, points[5][i].y);
 		}
 		
-		//»­8¸ö3/4Ô²
-		g.setColor(Color.green);
-		g.drawArc(0, 0, 280, 280, 0, 270);
-		g.drawArc(350, 0, 280, 280, -90, 270);
-		g.drawArc(0, 350, 280, 280, 90, 270);
-		g.drawArc(350, 350, 280, 280, 180, 270);
-		g.setColor(Color.blue);
-		g.drawArc(70, 70, 140, 140, 0, 270);
-		g.drawArc(420, 70, 140, 140, -90, 270);
-		g.drawArc(70, 420, 140, 140, 90, 270);
-		g.drawArc(420, 420, 140, 140, 180, 270);
+		//8ä¸ª3/4åœ†
+		g2.setColor(Color.green);
+		g2.drawArc(0, 0, 280, 280, 0, 270);
+		g2.drawArc(350, 0, 280, 280, -90, 270);
+		g2.drawArc(0, 350, 280, 280, 90, 270);
+		g2.drawArc(350, 350, 280, 280, 180, 270);
+		g2.setColor(Color.blue);
+		g2.drawArc(70, 70, 140, 140, 0, 270);
+		g2.drawArc(420, 70, 140, 140, -90, 270);
+		g2.drawArc(70, 420, 140, 140, 90, 270);
+		g2.drawArc(420, 420, 140, 140, 180, 270);
 		
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 6; i++) {
 			for(int j = 0; j < 6; j++) {
-				
+				if(state[i][j] == -1) {
+					Chess chess = new Chess(Color.black, points[i][j],i+1,j+1);
+					chessList.add(chess);
+					g2.setColor(chess.color);
+					g2.fillOval(points[i][j].x-chess.radius, points[i][j].y-chess.radius, chess.radius*2, chess.radius*2);
+				}
+				else if(state[i][j] == 1){
+					Chess chess1 = new Chess(Color.red, points[i][j],i+1,j+1);
+					chessList.add(chess1);
+					g2.setColor(chess1.color);
+					g2.fillOval(points[i][j].x-chess1.radius, points[i][j].y-chess1.radius, chess1.radius*2, chess1.radius*2);
+				}
 			}
 		}
 		

@@ -1,63 +1,102 @@
 package com.surakarta;
 
 import javax.swing.JFrame;
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.BreakIterator;
 
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class FirstDialog extends JFrame implements ActionListener{
 	
-	private JButton startButton;
+	public JButton startButton;
+	public JRadioButton computer_first;
+	public JRadioButton player_first;
+	public ButtonGroup radiobuttons;
 	
 	public FirstDialog() {
 		setSize(440, 270);
 		this.setLocationRelativeTo(null);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setFont(new Font("»ªÎÄçúçê", Font.PLAIN, 30));
-		lblNewLabel.setText("ËÕÀ­¿¨¶ûËş");
+		lblNewLabel.setFont(new Font("åæ–‡ç¥ç€", Font.PLAIN, 30));
+		lblNewLabel.setText("è‹æ‹‰å¡å°”å¡”");
 		
 		startButton = new JButton("New button");
-		startButton.setText("¿ªÊ¼ÓÎÏ·");
+		startButton.setText("å¼€å§‹");
 		startButton.addActionListener(this);
+		
+		computer_first = new JRadioButton("ç”µè„‘å…ˆæ‰‹");
+		computer_first.setFont(new Font("å®‹ä½“", Font.PLAIN, 12));
+		
+		player_first = new JRadioButton("ç©å®¶å…ˆæ‰‹");
+		player_first.setFont(new Font("å®‹ä½“", Font.PLAIN, 12));
+		
+		radiobuttons = new ButtonGroup();
+		radiobuttons.add(computer_first);
+		radiobuttons.add(player_first);
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(142, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(startButton)
-							.addGap(32)))
+					.addGap(141)
+					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(133))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(188)
+					.addComponent(startButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(179))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(180)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(player_first, GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+						.addComponent(computer_first, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(171))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(46)
 					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-					.addGap(43)
-					.addComponent(startButton)
-					.addContainerGap(66, Short.MAX_VALUE))
+					.addGap(6)
+					.addComponent(computer_first)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(player_first, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(startButton, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+					.addGap(37))
 		);
 		getContentPane().setLayout(groupLayout);
 		
 		
 	}
 
-	//¿ªÊ¼ÓÎÏ·°´Å¥¼àÌı
+	//å¼€å§‹æŒ‰é’®ç‚¹å‡»ç›‘å¬
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == startButton) {
-			MainDialog mainDialog = new MainDialog();
-			mainDialog.setVisible(true);
+			if(computer_first.isSelected() == true) {
+				MainDialog mainDialog = new MainDialog(0);//ç”µè„‘å…ˆæ‰‹
+				mainDialog.setVisible(true);
+			}
+			else if(player_first.isSelected() == true){
+				MainDialog mainDialog = new MainDialog(1);//äººå…ˆæ‰‹
+				mainDialog.setVisible(true);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "è¯·é€‰æ‹©ä¸€æ–¹å…ˆæ‰‹ï¼");
+				return;
+			}
 			this.dispose();
 		}
 		

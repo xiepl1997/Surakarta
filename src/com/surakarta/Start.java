@@ -12,8 +12,8 @@ public class Start {
 			//MyFrame frame = new MyFrame();
 			FirstDialog frame = new FirstDialog();
 			
-			frame.setLocationRelativeTo(null);            //¾ÓÖÐ
-			frame.setTitle("¿ªÊ¼");
+			frame.setLocationRelativeTo(null);            //å±…ä¸­
+			frame.setTitle("å¼€å§‹Ê¼");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			
