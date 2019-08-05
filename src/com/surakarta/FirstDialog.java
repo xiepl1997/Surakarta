@@ -86,7 +86,7 @@ public class FirstDialog extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == startButton) {
 			if(computer_first.isSelected() == true) {
-				MainDialog mainDialog = new MainDialog(0);//电脑先手
+			MainDialog mainDialog = new MainDialog(0);//电脑先手
 				mainDialog.setVisible(true);
 			}
 			else if(player_first.isSelected() == true){

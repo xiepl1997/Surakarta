@@ -22,7 +22,7 @@ public class MyPanel extends JPanel{
 		{new Point(140, 420),new Point(210,420),new Point(280,420),new Point(350,420),new Point(420, 420),new Point(490,420)},
 		{new Point(140, 490),new Point(210,490),new Point(280,490),new Point(350,490),new Point(420, 490),new Point(490,490)},
 	};
-	
+	//棋盘状态
 	public int state[][] = {
 		{-1,-1,-1,-1,-1,-1},
 		{-1,-1,-1,-1,-1,-1},
@@ -31,8 +31,18 @@ public class MyPanel extends JPanel{
 		{1,1,1,1,1,1},
 		{1,1,1,1,1,1}
 	};
+	//标记所选棋子的可落子点，1位为可落子
+	public int step[][] = {
+			{0,0,0,0,0,0},
+			{0,0,0,0,0,0},
+			{0,0,0,0,0,0},
+			{0,0,0,0,0,0},
+			{0,0,0,0,0,0},
+			{0,0,0,0,0,0},
+	};
 	
 	public ArrayList<Chess> chessList = new ArrayList<Chess>();
+	public ArrayList<Step> stepList = new ArrayList<Step>();
 	
 	public MyPanel() {
 		super();
@@ -82,6 +92,8 @@ public class MyPanel extends JPanel{
 		g2.drawArc(70, 420, 140, 140, 90, 270);
 		g2.drawArc(420, 420, 140, 140, 180, 270);
 		
+		//绘制棋子
+		chessList.clear();
 		for(int i = 0; i < 6; i++) {
 			for(int j = 0; j < 6; j++) {
 				if(state[i][j] == -1) {
@@ -95,6 +107,12 @@ public class MyPanel extends JPanel{
 					chessList.add(chess1);
 					g2.setColor(chess1.color);
 					g2.fillOval(points[i][j].x-chess1.radius, points[i][j].y-chess1.radius, chess1.radius*2, chess1.radius*2);
+				}
+				if(step[i][j] == 1) {
+					Step step = new Step(points[i][j], i+1, j+1);
+					stepList.add(step);
+					g2.setColor(step.color);
+					g2.fillOval(points[i][j].x-step.radius, points[i][j].y-step.radius, step.radius*2, step.radius*2);
 				}
 			}
 		}
