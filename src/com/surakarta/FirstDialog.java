@@ -98,6 +98,7 @@ public class FirstDialog extends JFrame implements ActionListener{
 				return;
 			}
 			this.dispose();
+			
 		}
 		
 	}
